@@ -181,3 +181,54 @@ The access control rule written in CEL. In this example, it allows access only t
 GitToken: "token",
 ```
 A personal access token (PAT) used to authenticate with the GitHub API.
+
+---
+
+## Example Response (AccessInformationResponse)
+
+Below is an example of how the gRPC response might look, with explanations for each part:
+
+```text
+repositories:{
+  repositoryUrl: "https://github.com/testalexgreenman/testme"
+  userInformation:{
+    ok: true
+    repositoryUser:{
+      id: { value: "7945522" }
+      userName: "alex148148717"
+      type: User
+      permissions:{
+        key: "admin"    value: true
+      }
+      permissions:{
+        key: "maintain" value: true
+      }
+      permissions:{
+        key: "push"     value: true
+      }
+      permissions:{
+        key: "triage"   value: true
+      }
+      permissions:{
+        key: "pull"     value: true
+      }
+    }
+  }
+}
+organizations: "https://github.com/testalexgreenman"
+scanText: "userName == \"alex148148717\""
+```
+
+### 🔍 Explanation:
+
+- `repositories`: A list of scanned repositories.
+    - `repositoryUrl`: The URL of the repository that was scanned.
+    - `userInformation`: The result of scanning a user in that repository.
+        - `ok: true`: The user passed the access control rule (defined in `scanText`).
+        - `repositoryUser`: Contains detailed info about the user:
+            - `id.value`: Internal user ID (as string).
+            - `userName`: GitHub username of the user.
+            - `type`: Enum representing user role (`User`, `Admin`, etc.).
+            - `permissions`: A list of permissions the user has (e.g. admin, push, pull).
+- `organizations`: The organization or user account that owns the repository.
+- `scanText`: The CEL expression that was evaluated for each user.
