@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package git_access_information;
+option go_package = "internal/github_cel/interfaces";
+
+enum GitType {
+  Github = 0;
+}
+
+enum AccessControlType {
+  CEL = 0;
+}
+
+message Permissions {
+  string key = 1;
+  bool value = 2;
+}
+
+message UserID {
+  string value = 1;
+}
+
+enum UserType {
+  Guest = 0;
+  User = 1;
+  Admin = 2;
+
+}
+
+message RepositoryUser {
+  UserID id = 1;
+  string userName = 2;
+  string email = 3;
+  UserType type = 4;
+  repeated Permissions permissions = 5;
+}
+
+message UserInformation {
+  bool ok = 1;
+  string message = 2;
+  string error = 3;
+  RepositoryUser repositoryUser = 4;
+}
+
+message RepositoryAccessInformation {
+  string repositoryUrl = 1;
+  string error = 2;
+  repeated UserInformation userInformation = 3;
+}
+
+message AccessInformationResponse {
+  repeated RepositoryAccessInformation repositories = 1;
+  string organizations = 2;
+  string scanText = 3;
+}
+
+message AccessInformationRequest {
+  GitType gitType = 1;
+  AccessControlType accessControlType = 2;
+  repeated string repositoriesUrl = 3;
+  string organizations = 4;
+  string scanText = 5;
+  string gitToken = 6;
+}
+service GitAccessInformationV1 {
+  rpc GetAccessInformation (AccessInformationRequest) returns (AccessInformationResponse);
+}
