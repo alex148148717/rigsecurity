@@ -232,3 +232,19 @@ scanText: "userName == \"alex148148717\""
             - `permissions`: A list of permissions the user has (e.g. admin, push, pull).
 - `organizations`: The organization or user account that owns the repository.
 - `scanText`: The CEL expression that was evaluated for each user.
+
+---
+
+## Example .env File
+
+Your service can be configured via environment variables. Below is a sample `.env` file used to define the default port:
+
+```dotenv
+# .env
+PORT=50051
+```
+
+### 🔧 Explanation:
+- `PORT`: The port on which the gRPC server will listen.
+    - Default: `50051`
+    - You can override it by setting this environment variable when running the service.
