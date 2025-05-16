@@ -11,7 +11,7 @@ import (
 )
 
 func NewListener(config *config.Config) (net.Listener, error) {
-	return net.Listen("tcp", ":50051")
+	return net.Listen("tcp", ":"+config.Port)
 
 }
 func NewServer(lc fx.Lifecycle, lis net.Listener, s interfaces.GitAccessInformationV1Server) *grpc.Server {

@@ -5,11 +5,12 @@ import (
 )
 
 type Config struct {
+	Port string
 }
 
 func LoadConfig() (*Config, error) {
 	cfg := &Config{}
-
+	cfg.Port = getEnv("PORT", "50051")
 	return cfg, nil
 }
 
